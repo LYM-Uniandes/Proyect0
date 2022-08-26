@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ASSIGN BREAK CLOSECORCHETE COMMA DIVIDE DO FI GORP GT GTE ID IF LPARENT LT LTE MINUS NE NUMBER OD ODD OPENCORCHETE PLUS PROC PROG RPARENT SEMMICOLOM SPACE TIMES UPDATE VAR WHILEprogram : PROGprogram : PROG variable proc GORPprogram : PROG variable proc proc GORPprogram : PROG variable proc proc proc GORPvariable : VAR ID COMMA ID COMMA ID SEMMICOLOMvariable : ID ASSIGN NUMBER SEMMICOLOMproc : PROC ID LPARENT ID COMMA ID RPARENT statement procproc : PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETEproc : OPENCORCHETE proc variable proc CLOSECORCHETEproc : PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETEproc : ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOMproc : ID LPARENT NUMBER COMMA NUMBER RPARENT statement : while if : IF condition  OPENCORCHETE statement CLOSECORCHETE  FIwhile : WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD  condition : LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENTdo :  OPENCORCHETE ID LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE statement : OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE statement : ID LPARENT ID COMMA NUMBER RPARENT'
+_lr_signature = 'ASSIGN BREAK CLOSECORCHETE COMMA DIVIDE DO FI GORP GT GTE ID IF LPARENT LT LTE MINUS NE NUMBER OD ODD OPENCORCHETE PLUS PROC PROG RPARENT SEMMICOLOM SPACE TIMES UPDATE VAR WHILEprogram : PROGprogram : PROG variable proc GORPproc : proc procvariable : VAR variable variable : ID COMMA variable : ID SEMMICOLOM variable : variable variablevariable : ID ASSIGN NUMBER SEMMICOLOMproc : PROC ID arguments statement procarguments : LPARENT arguments RPARENTarguments : arguments argumentsarguments : ID COMMA arguments : IDproc : PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETEproc : OPENCORCHETE proc variable proc CLOSECORCHETEproc : PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETEproc : ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOMproc : ID LPARENT NUMBER COMMA NUMBER RPARENT statement : while if : IF condition  OPENCORCHETE statement CLOSECORCHETE  FIwhile : WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD  condition : LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENTdo :  OPENCORCHETE ID LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE statement : OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE statement : ID LPARENT ID COMMA NUMBER RPARENT'
     
-_lr_action_items = {'PROG':([0,],[2,]),'$end':([1,2,13,20,26,],[0,-1,-2,-3,-4,]),'VAR':([2,16,35,45,50,51,55,62,],[4,4,-9,-12,-8,-10,-11,-7,]),'ID':([2,3,4,6,7,9,12,16,17,21,23,25,31,32,33,35,39,42,45,46,47,48,50,51,53,54,55,56,58,59,62,66,67,73,74,81,89,91,93,95,96,101,],[5,8,10,8,14,8,8,5,24,27,8,-6,36,37,38,-9,49,-13,-12,-5,38,57,-8,-10,60,61,-11,8,64,38,-7,71,72,-19,78,84,92,94,-15,97,98,-18,]),'PROC':([3,6,9,12,23,25,35,42,45,46,50,51,55,56,62,73,93,101,],[7,7,7,7,7,-6,-9,-13,-12,-5,-8,-10,-11,7,-7,-19,-15,-18,]),'OPENCORCHETE':([3,6,9,12,23,25,28,33,35,42,45,46,47,50,51,52,55,56,59,62,73,85,88,93,101,],[9,9,9,9,9,-6,33,39,-9,-13,-12,-5,39,-8,-10,59,-11,9,39,-7,-19,-16,91,-15,-18,]),'ASSIGN':([5,],[11,]),'GORP':([6,12,19,35,45,50,51,55,62,],[13,20,26,-9,-12,-8,-10,-11,-7,]),'LPARENT':([8,14,38,43,44,49,60,61,78,92,94,],[15,21,48,53,54,58,66,67,81,95,96,]),'COMMA':([10,22,24,27,57,71,72,98,],[17,29,31,32,63,76,77,100,]),'NUMBER':([11,15,29,63,76,77,100,],[18,22,34,68,79,80,102,]),'SEMMICOLOM':([18,36,45,69,87,],[25,46,55,74,89,]),'RPARENT':([21,34,37,64,68,79,80,82,83,84,97,102,],[28,45,47,69,73,82,83,85,86,87,99,103,]),'CLOSECORCHETE':([30,35,40,41,42,45,50,51,55,62,65,73,75,93,99,101,103,],[35,-9,50,51,-13,-12,-8,-10,-11,-7,70,-19,-14,-15,101,-18,104,]),'IF':([33,],[43,]),'WHILE':([33,47,59,],[44,44,44,]),'FI':([70,],[75,]),'DO':([86,],[88,]),'OD':([90,104,],[93,-17,]),}
+_lr_action_items = {'PROG':([0,],[2,]),'$end':([1,2,16,],[0,-1,-2,]),'VAR':([2,3,4,6,11,12,13,15,20,26,28,42,48,56,60,61,64,],[4,4,4,4,4,-5,-6,-3,4,4,-8,-9,-15,-18,-14,-16,-17,]),'ID':([2,3,4,6,7,8,10,11,12,13,15,18,20,22,23,24,26,28,29,30,31,32,33,34,35,38,40,41,42,44,45,46,48,50,56,59,60,61,63,64,68,70,71,74,79,89,91,94,96,97,102,],[5,9,5,5,17,18,17,5,-5,-6,17,22,27,-13,30,22,9,-8,-12,-13,22,17,-19,43,22,22,17,49,17,51,52,-10,-15,58,-18,67,-14,-16,69,-17,52,-25,75,78,83,93,95,-21,98,99,-24,]),'PROC':([3,6,7,10,11,12,13,15,20,26,28,32,33,40,42,48,56,60,61,64,70,94,102,],[8,-7,8,8,-4,-5,-6,8,8,8,-8,8,-19,8,8,-15,-18,-14,-16,-17,-25,-21,-24,]),'OPENCORCHETE':([3,6,7,10,11,12,13,15,20,22,23,26,28,29,30,31,32,33,37,40,42,45,46,48,56,60,61,62,64,68,70,87,92,94,102,],[10,-7,10,10,-4,-5,-6,10,10,-13,34,10,-8,-12,-13,-11,10,-19,45,10,10,34,-10,-15,-18,-14,-16,68,-17,34,-25,91,-22,-21,-24,]),'COMMA':([5,9,22,25,27,30,49,67,78,99,],[12,12,29,39,12,29,57,72,82,101,]),'SEMMICOLOM':([5,9,21,27,56,66,86,],[13,13,28,13,64,71,89,]),'ASSIGN':([5,9,27,],[14,14,14,]),'GORP':([7,15,42,48,56,60,61,64,],[16,-3,-9,-15,-18,-14,-16,-17,]),'LPARENT':([9,17,18,22,23,24,27,29,30,31,35,36,38,43,46,51,52,55,69,75,93,95,],[19,19,24,-13,35,35,19,-12,41,35,35,44,35,50,-10,59,41,63,74,79,96,97,]),'NUMBER':([14,19,39,57,72,82,101,],[21,25,47,65,76,85,103,]),'CLOSECORCHETE':([15,33,40,42,48,53,54,56,60,61,64,70,73,81,94,100,102,104,],[-3,-19,48,-9,-15,60,61,-18,-14,-16,-17,-25,77,-20,-21,102,-24,105,]),'WHILE':([22,23,29,30,31,45,46,68,],[-13,36,-12,-13,-11,36,-10,36,]),'RPARENT':([22,24,29,31,38,46,47,58,65,76,80,83,85,88,98,103,],[-13,37,-12,-11,46,-10,56,66,70,80,84,86,88,92,100,104,]),'IF':([45,],[55,]),'FI':([77,],[81,]),'DO':([84,],[87,]),'OD':([90,105,],[94,-23,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,],[1,]),'variable':([2,16,],[3,23,]),'proc':([3,6,9,12,23,56,],[6,12,16,19,30,62,]),'statement':([33,47,59,],[40,56,65,]),'if':([33,],[41,]),'while':([33,47,59,],[42,42,42,]),'condition':([43,],[52,]),'do':([88,],[90,]),}
+_lr_goto_items = {'program':([0,],[1,]),'variable':([2,3,4,6,11,20,26,],[3,6,11,6,6,26,6,]),'proc':([3,7,10,15,20,26,32,40,42,],[7,15,20,15,15,40,42,15,15,]),'arguments':([18,23,24,31,35,38,],[23,31,38,31,38,31,]),'statement':([23,45,68,],[32,53,73,]),'while':([23,45,68,],[33,33,33,]),'if':([45,],[54,]),'condition':([55,],[62,]),'do':([87,],[90,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -29,21 +29,27 @@ _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
   ('program -> PROG','program',1,'p_progs','parser.py',86),
   ('program -> PROG variable proc GORP','program',4,'p_progf','parser.py',90),
-  ('program -> PROG variable proc proc GORP','program',5,'p_progf2','parser.py',94),
-  ('program -> PROG variable proc proc proc GORP','program',6,'p_progf3','parser.py',99),
-  ('variable -> VAR ID COMMA ID COMMA ID SEMMICOLOM','variable',7,'p_variable','parser.py',103),
-  ('variable -> ID ASSIGN NUMBER SEMMICOLOM','variable',4,'p_variable1','parser.py',107),
-  ('proc -> PROC ID LPARENT ID COMMA ID RPARENT statement proc','proc',9,'p_PROC','parser.py',109),
-  ('proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE','proc',7,'p_PROC1','parser.py',113),
-  ('proc -> OPENCORCHETE proc variable proc CLOSECORCHETE','proc',5,'p_PROC2','parser.py',117),
-  ('proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE','proc',7,'p_PROC3','parser.py',121),
-  ('proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM','proc',7,'p_PROC4','parser.py',125),
-  ('proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT','proc',6,'p_PROC5','parser.py',128),
-  ('statement -> while','statement',1,'p_statement1','parser.py',130),
-  ('if -> IF condition OPENCORCHETE statement CLOSECORCHETE FI','if',6,'p_if','parser.py',138),
-  ('while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD','while',12,'p_While','parser.py',142),
-  ('condition -> LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT','condition',8,'p_condition','parser.py',146),
-  ('do -> OPENCORCHETE ID LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE','do',8,'p_do','parser.py',148),
-  ('statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE','statement',16,'p_statement','parser.py',153),
-  ('statement -> ID LPARENT ID COMMA NUMBER RPARENT','statement',6,'p_statement2','parser.py',157),
+  ('proc -> proc proc','proc',2,'p_proc4','parser.py',96),
+  ('variable -> VAR variable','variable',2,'p_variable','parser.py',99),
+  ('variable -> ID COMMA','variable',2,'p_variable2','parser.py',103),
+  ('variable -> ID SEMMICOLOM','variable',2,'p_variable3','parser.py',107),
+  ('variable -> variable variable','variable',2,'p_variable4','parser.py',111),
+  ('variable -> ID ASSIGN NUMBER SEMMICOLOM','variable',4,'p_variable1','parser.py',115),
+  ('proc -> PROC ID arguments statement proc','proc',5,'p_PROC','parser.py',118),
+  ('arguments -> LPARENT arguments RPARENT','arguments',3,'p_arguments','parser.py',122),
+  ('arguments -> arguments arguments','arguments',2,'p_arguments2','parser.py',125),
+  ('arguments -> ID COMMA','arguments',2,'p_arguments3','parser.py',128),
+  ('arguments -> ID','arguments',1,'p_arguments4','parser.py',131),
+  ('proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE','proc',7,'p_PROC1','parser.py',134),
+  ('proc -> OPENCORCHETE proc variable proc CLOSECORCHETE','proc',5,'p_PROC2','parser.py',138),
+  ('proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE','proc',7,'p_PROC3','parser.py',142),
+  ('proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM','proc',7,'p_PROC4','parser.py',146),
+  ('proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT','proc',6,'p_PROC5','parser.py',149),
+  ('statement -> while','statement',1,'p_statement1','parser.py',152),
+  ('if -> IF condition OPENCORCHETE statement CLOSECORCHETE FI','if',6,'p_if','parser.py',160),
+  ('while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD','while',12,'p_While','parser.py',164),
+  ('condition -> LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT','condition',8,'p_condition','parser.py',168),
+  ('do -> OPENCORCHETE ID LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE','do',8,'p_do','parser.py',170),
+  ('statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE','statement',16,'p_statement','parser.py',175),
+  ('statement -> ID LPARENT ID COMMA NUMBER RPARENT','statement',6,'p_statement2','parser.py',179),
 ]

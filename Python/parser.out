@@ -21,69 +21,76 @@ Grammar
 Rule 0     S' -> program
 Rule 1     program -> PROG
 Rule 2     program -> PROG variable proc GORP
-Rule 3     program -> PROG variable proc proc GORP
-Rule 4     program -> PROG variable proc proc proc GORP
-Rule 5     variable -> VAR ID COMMA ID COMMA ID SEMMICOLOM
-Rule 6     variable -> ID ASSIGN NUMBER SEMMICOLOM
-Rule 7     proc -> PROC ID LPARENT ID COMMA ID RPARENT statement proc
-Rule 8     proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
-Rule 9     proc -> OPENCORCHETE proc variable proc CLOSECORCHETE
-Rule 10    proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
-Rule 11    proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
-Rule 12    proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT
-Rule 13    statement -> while
-Rule 14    if -> IF condition OPENCORCHETE statement CLOSECORCHETE FI
-Rule 15    while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD
-Rule 16    condition -> LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT
-Rule 17    do -> OPENCORCHETE ID LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE
-Rule 18    statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
-Rule 19    statement -> ID LPARENT ID COMMA NUMBER RPARENT
+Rule 3     proc -> proc proc
+Rule 4     variable -> VAR variable
+Rule 5     variable -> ID COMMA
+Rule 6     variable -> ID SEMMICOLOM
+Rule 7     variable -> variable variable
+Rule 8     variable -> ID ASSIGN NUMBER SEMMICOLOM
+Rule 9     proc -> PROC ID arguments statement proc
+Rule 10    arguments -> LPARENT arguments RPARENT
+Rule 11    arguments -> arguments arguments
+Rule 12    arguments -> ID COMMA
+Rule 13    arguments -> ID
+Rule 14    proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
+Rule 15    proc -> OPENCORCHETE proc variable proc CLOSECORCHETE
+Rule 16    proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
+Rule 17    proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
+Rule 18    proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT
+Rule 19    statement -> while
+Rule 20    if -> IF condition OPENCORCHETE statement CLOSECORCHETE FI
+Rule 21    while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD
+Rule 22    condition -> LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT
+Rule 23    do -> OPENCORCHETE ID LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE
+Rule 24    statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
+Rule 25    statement -> ID LPARENT ID COMMA NUMBER RPARENT
 
 Terminals, with rules where they appear
 
-ASSIGN               : 6
+ASSIGN               : 8
 BREAK                : 
-CLOSECORCHETE        : 8 9 10 14 17 18
-COMMA                : 5 5 7 11 12 15 16 17 19
+CLOSECORCHETE        : 14 15 16 20 23 24
+COMMA                : 5 12 17 18 21 22 23 25
 DIVIDE               : 
-DO                   : 15
-FI                   : 14
-GORP                 : 2 3 4
+DO                   : 21
+FI                   : 20
+GORP                 : 2
 GT                   : 
 GTE                  : 
-ID                   : 5 5 5 6 7 7 7 8 10 11 12 15 15 16 16 17 17 18 18 18 18 18 18 19 19
-IF                   : 14
-LPARENT              : 7 8 10 11 12 15 15 16 16 17 18 18 18 19
+ID                   : 5 6 8 9 12 13 14 16 17 18 21 21 22 22 23 23 24 24 24 24 24 24 25 25
+IF                   : 20
+LPARENT              : 10 14 16 17 18 21 21 22 22 23 24 24 24 25
 LT                   : 
 LTE                  : 
 MINUS                : 
 NE                   : 
-NUMBER               : 6 11 11 12 12 15 16 17 19
-OD                   : 15
+NUMBER               : 8 17 17 18 18 21 22 23 25
+OD                   : 21
 ODD                  : 
-OPENCORCHETE         : 8 9 10 14 17 18
+OPENCORCHETE         : 14 15 16 20 23 24
 PLUS                 : 
-PROC                 : 7 8 10
-PROG                 : 1 2 3 4
-RPARENT              : 7 8 10 11 12 15 15 16 16 17 18 18 18 19
-SEMMICOLOM           : 5 6 11 18 18
+PROC                 : 9 14 16
+PROG                 : 1 2
+RPARENT              : 10 14 16 17 18 21 21 22 22 23 24 24 24 25
+SEMMICOLOM           : 6 8 17 24 24
 SPACE                : 
 TIMES                : 
 UPDATE               : 
-VAR                  : 5
-WHILE                : 15
+VAR                  : 4
+WHILE                : 21
 error                : 
 
 Nonterminals, with rules where they appear
 
-condition            : 14
-do                   : 15
-if                   : 10
-proc                 : 2 3 3 4 4 4 7 9 9
+arguments            : 9 10 11 11
+condition            : 20
+do                   : 21
+if                   : 16
+proc                 : 2 3 3 9 15 15
 program              : 0
-statement            : 7 8 14
-variable             : 2 3 4 9
-while                : 13
+statement            : 9 14 20
+variable             : 2 4 7 7 15
+while                : 19
 
 Parsing method: LALR
 
@@ -92,8 +99,6 @@ state 0
     (0) S' -> . program
     (1) program -> . PROG
     (2) program -> . PROG variable proc GORP
-    (3) program -> . PROG variable proc proc GORP
-    (4) program -> . PROG variable proc proc proc GORP
 
     PROG            shift and go to state 2
 
@@ -109,10 +114,11 @@ state 2
 
     (1) program -> PROG .
     (2) program -> PROG . variable proc GORP
-    (3) program -> PROG . variable proc proc GORP
-    (4) program -> PROG . variable proc proc proc GORP
-    (5) variable -> . VAR ID COMMA ID COMMA ID SEMMICOLOM
-    (6) variable -> . ID ASSIGN NUMBER SEMMICOLOM
+    (4) variable -> . VAR variable
+    (5) variable -> . ID COMMA
+    (6) variable -> . ID SEMMICOLOM
+    (7) variable -> . variable variable
+    (8) variable -> . ID ASSIGN NUMBER SEMMICOLOM
 
     $end            reduce using rule 1 (program -> PROG .)
     VAR             shift and go to state 4
@@ -123,871 +129,1095 @@ state 2
 state 3
 
     (2) program -> PROG variable . proc GORP
-    (3) program -> PROG variable . proc proc GORP
-    (4) program -> PROG variable . proc proc proc GORP
-    (7) proc -> . PROC ID LPARENT ID COMMA ID RPARENT statement proc
-    (8) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
-    (9) proc -> . OPENCORCHETE proc variable proc CLOSECORCHETE
-    (10) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
-    (11) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
-    (12) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT
+    (7) variable -> variable . variable
+    (3) proc -> . proc proc
+    (9) proc -> . PROC ID arguments statement proc
+    (14) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
+    (15) proc -> . OPENCORCHETE proc variable proc CLOSECORCHETE
+    (16) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
+    (17) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
+    (18) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT
+    (4) variable -> . VAR variable
+    (5) variable -> . ID COMMA
+    (6) variable -> . ID SEMMICOLOM
+    (7) variable -> . variable variable
+    (8) variable -> . ID ASSIGN NUMBER SEMMICOLOM
 
-    PROC            shift and go to state 7
-    OPENCORCHETE    shift and go to state 9
-    ID              shift and go to state 8
+    PROC            shift and go to state 8
+    OPENCORCHETE    shift and go to state 10
+    ID              shift and go to state 9
+    VAR             shift and go to state 4
 
-    proc                           shift and go to state 6
+    variable                       shift and go to state 6
+    proc                           shift and go to state 7
 
 state 4
 
-    (5) variable -> VAR . ID COMMA ID COMMA ID SEMMICOLOM
+    (4) variable -> VAR . variable
+    (4) variable -> . VAR variable
+    (5) variable -> . ID COMMA
+    (6) variable -> . ID SEMMICOLOM
+    (7) variable -> . variable variable
+    (8) variable -> . ID ASSIGN NUMBER SEMMICOLOM
 
-    ID              shift and go to state 10
+    VAR             shift and go to state 4
+    ID              shift and go to state 5
 
+    variable                       shift and go to state 11
 
 state 5
 
-    (6) variable -> ID . ASSIGN NUMBER SEMMICOLOM
+    (5) variable -> ID . COMMA
+    (6) variable -> ID . SEMMICOLOM
+    (8) variable -> ID . ASSIGN NUMBER SEMMICOLOM
 
-    ASSIGN          shift and go to state 11
+    COMMA           shift and go to state 12
+    SEMMICOLOM      shift and go to state 13
+    ASSIGN          shift and go to state 14
 
 
 state 6
 
-    (2) program -> PROG variable proc . GORP
-    (3) program -> PROG variable proc . proc GORP
-    (4) program -> PROG variable proc . proc proc GORP
-    (7) proc -> . PROC ID LPARENT ID COMMA ID RPARENT statement proc
-    (8) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
-    (9) proc -> . OPENCORCHETE proc variable proc CLOSECORCHETE
-    (10) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
-    (11) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
-    (12) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT
+    (7) variable -> variable variable .
+    (7) variable -> variable . variable
+    (4) variable -> . VAR variable
+    (5) variable -> . ID COMMA
+    (6) variable -> . ID SEMMICOLOM
+    (7) variable -> . variable variable
+    (8) variable -> . ID ASSIGN NUMBER SEMMICOLOM
 
-    GORP            shift and go to state 13
-    PROC            shift and go to state 7
-    OPENCORCHETE    shift and go to state 9
-    ID              shift and go to state 8
+  ! shift/reduce conflict for VAR resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+    PROC            reduce using rule 7 (variable -> variable variable .)
+    OPENCORCHETE    reduce using rule 7 (variable -> variable variable .)
+    VAR             shift and go to state 4
+    ID              shift and go to state 5
 
-    proc                           shift and go to state 12
+  ! ID              [ reduce using rule 7 (variable -> variable variable .) ]
+  ! VAR             [ reduce using rule 7 (variable -> variable variable .) ]
+
+    variable                       shift and go to state 6
 
 state 7
 
-    (7) proc -> PROC . ID LPARENT ID COMMA ID RPARENT statement proc
-    (8) proc -> PROC . ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
-    (10) proc -> PROC . ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
+    (2) program -> PROG variable proc . GORP
+    (3) proc -> proc . proc
+    (3) proc -> . proc proc
+    (9) proc -> . PROC ID arguments statement proc
+    (14) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
+    (15) proc -> . OPENCORCHETE proc variable proc CLOSECORCHETE
+    (16) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
+    (17) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
+    (18) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT
 
-    ID              shift and go to state 14
+    GORP            shift and go to state 16
+    PROC            shift and go to state 8
+    OPENCORCHETE    shift and go to state 10
+    ID              shift and go to state 17
 
+    proc                           shift and go to state 15
 
 state 8
 
-    (11) proc -> ID . LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
-    (12) proc -> ID . LPARENT NUMBER COMMA NUMBER RPARENT
+    (9) proc -> PROC . ID arguments statement proc
+    (14) proc -> PROC . ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
+    (16) proc -> PROC . ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
 
-    LPARENT         shift and go to state 15
+    ID              shift and go to state 18
 
 
 state 9
 
-    (9) proc -> OPENCORCHETE . proc variable proc CLOSECORCHETE
-    (7) proc -> . PROC ID LPARENT ID COMMA ID RPARENT statement proc
-    (8) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
-    (9) proc -> . OPENCORCHETE proc variable proc CLOSECORCHETE
-    (10) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
-    (11) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
-    (12) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT
+    (17) proc -> ID . LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
+    (18) proc -> ID . LPARENT NUMBER COMMA NUMBER RPARENT
+    (5) variable -> ID . COMMA
+    (6) variable -> ID . SEMMICOLOM
+    (8) variable -> ID . ASSIGN NUMBER SEMMICOLOM
 
-    PROC            shift and go to state 7
-    OPENCORCHETE    shift and go to state 9
-    ID              shift and go to state 8
+    LPARENT         shift and go to state 19
+    COMMA           shift and go to state 12
+    SEMMICOLOM      shift and go to state 13
+    ASSIGN          shift and go to state 14
 
-    proc                           shift and go to state 16
 
 state 10
 
-    (5) variable -> VAR ID . COMMA ID COMMA ID SEMMICOLOM
+    (15) proc -> OPENCORCHETE . proc variable proc CLOSECORCHETE
+    (3) proc -> . proc proc
+    (9) proc -> . PROC ID arguments statement proc
+    (14) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
+    (15) proc -> . OPENCORCHETE proc variable proc CLOSECORCHETE
+    (16) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
+    (17) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
+    (18) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT
 
-    COMMA           shift and go to state 17
+    PROC            shift and go to state 8
+    OPENCORCHETE    shift and go to state 10
+    ID              shift and go to state 17
 
+    proc                           shift and go to state 20
 
 state 11
 
-    (6) variable -> ID ASSIGN . NUMBER SEMMICOLOM
+    (4) variable -> VAR variable .
+    (7) variable -> variable . variable
+    (4) variable -> . VAR variable
+    (5) variable -> . ID COMMA
+    (6) variable -> . ID SEMMICOLOM
+    (7) variable -> . variable variable
+    (8) variable -> . ID ASSIGN NUMBER SEMMICOLOM
 
-    NUMBER          shift and go to state 18
+  ! shift/reduce conflict for VAR resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+    PROC            reduce using rule 4 (variable -> VAR variable .)
+    OPENCORCHETE    reduce using rule 4 (variable -> VAR variable .)
+    VAR             shift and go to state 4
+    ID              shift and go to state 5
 
+  ! ID              [ reduce using rule 4 (variable -> VAR variable .) ]
+  ! VAR             [ reduce using rule 4 (variable -> VAR variable .) ]
+
+    variable                       shift and go to state 6
 
 state 12
 
-    (3) program -> PROG variable proc proc . GORP
-    (4) program -> PROG variable proc proc . proc GORP
-    (7) proc -> . PROC ID LPARENT ID COMMA ID RPARENT statement proc
-    (8) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
-    (9) proc -> . OPENCORCHETE proc variable proc CLOSECORCHETE
-    (10) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
-    (11) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
-    (12) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT
+    (5) variable -> ID COMMA .
 
-    GORP            shift and go to state 20
-    PROC            shift and go to state 7
-    OPENCORCHETE    shift and go to state 9
-    ID              shift and go to state 8
+    PROC            reduce using rule 5 (variable -> ID COMMA .)
+    OPENCORCHETE    reduce using rule 5 (variable -> ID COMMA .)
+    ID              reduce using rule 5 (variable -> ID COMMA .)
+    VAR             reduce using rule 5 (variable -> ID COMMA .)
 
-    proc                           shift and go to state 19
 
 state 13
+
+    (6) variable -> ID SEMMICOLOM .
+
+    PROC            reduce using rule 6 (variable -> ID SEMMICOLOM .)
+    OPENCORCHETE    reduce using rule 6 (variable -> ID SEMMICOLOM .)
+    ID              reduce using rule 6 (variable -> ID SEMMICOLOM .)
+    VAR             reduce using rule 6 (variable -> ID SEMMICOLOM .)
+
+
+state 14
+
+    (8) variable -> ID ASSIGN . NUMBER SEMMICOLOM
+
+    NUMBER          shift and go to state 21
+
+
+state 15
+
+    (3) proc -> proc proc .
+    (3) proc -> proc . proc
+    (3) proc -> . proc proc
+    (9) proc -> . PROC ID arguments statement proc
+    (14) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
+    (15) proc -> . OPENCORCHETE proc variable proc CLOSECORCHETE
+    (16) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
+    (17) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
+    (18) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT
+
+  ! shift/reduce conflict for PROC resolved as shift
+  ! shift/reduce conflict for OPENCORCHETE resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+    GORP            reduce using rule 3 (proc -> proc proc .)
+    VAR             reduce using rule 3 (proc -> proc proc .)
+    CLOSECORCHETE   reduce using rule 3 (proc -> proc proc .)
+    PROC            shift and go to state 8
+    OPENCORCHETE    shift and go to state 10
+    ID              shift and go to state 17
+
+  ! PROC            [ reduce using rule 3 (proc -> proc proc .) ]
+  ! OPENCORCHETE    [ reduce using rule 3 (proc -> proc proc .) ]
+  ! ID              [ reduce using rule 3 (proc -> proc proc .) ]
+
+    proc                           shift and go to state 15
+
+state 16
 
     (2) program -> PROG variable proc GORP .
 
     $end            reduce using rule 2 (program -> PROG variable proc GORP .)
 
 
-state 14
-
-    (7) proc -> PROC ID . LPARENT ID COMMA ID RPARENT statement proc
-    (8) proc -> PROC ID . LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
-    (10) proc -> PROC ID . LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
-
-    LPARENT         shift and go to state 21
-
-
-state 15
-
-    (11) proc -> ID LPARENT . NUMBER COMMA NUMBER RPARENT SEMMICOLOM
-    (12) proc -> ID LPARENT . NUMBER COMMA NUMBER RPARENT
-
-    NUMBER          shift and go to state 22
-
-
-state 16
-
-    (9) proc -> OPENCORCHETE proc . variable proc CLOSECORCHETE
-    (5) variable -> . VAR ID COMMA ID COMMA ID SEMMICOLOM
-    (6) variable -> . ID ASSIGN NUMBER SEMMICOLOM
-
-    VAR             shift and go to state 4
-    ID              shift and go to state 5
-
-    variable                       shift and go to state 23
-
 state 17
 
-    (5) variable -> VAR ID COMMA . ID COMMA ID SEMMICOLOM
+    (17) proc -> ID . LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
+    (18) proc -> ID . LPARENT NUMBER COMMA NUMBER RPARENT
 
-    ID              shift and go to state 24
+    LPARENT         shift and go to state 19
 
 
 state 18
 
-    (6) variable -> ID ASSIGN NUMBER . SEMMICOLOM
+    (9) proc -> PROC ID . arguments statement proc
+    (14) proc -> PROC ID . LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
+    (16) proc -> PROC ID . LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
+    (10) arguments -> . LPARENT arguments RPARENT
+    (11) arguments -> . arguments arguments
+    (12) arguments -> . ID COMMA
+    (13) arguments -> . ID
 
-    SEMMICOLOM      shift and go to state 25
+    LPARENT         shift and go to state 24
+    ID              shift and go to state 22
 
+    arguments                      shift and go to state 23
 
 state 19
 
-    (4) program -> PROG variable proc proc proc . GORP
+    (17) proc -> ID LPARENT . NUMBER COMMA NUMBER RPARENT SEMMICOLOM
+    (18) proc -> ID LPARENT . NUMBER COMMA NUMBER RPARENT
 
-    GORP            shift and go to state 26
+    NUMBER          shift and go to state 25
 
 
 state 20
 
-    (3) program -> PROG variable proc proc GORP .
+    (15) proc -> OPENCORCHETE proc . variable proc CLOSECORCHETE
+    (3) proc -> proc . proc
+    (4) variable -> . VAR variable
+    (5) variable -> . ID COMMA
+    (6) variable -> . ID SEMMICOLOM
+    (7) variable -> . variable variable
+    (8) variable -> . ID ASSIGN NUMBER SEMMICOLOM
+    (3) proc -> . proc proc
+    (9) proc -> . PROC ID arguments statement proc
+    (14) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
+    (15) proc -> . OPENCORCHETE proc variable proc CLOSECORCHETE
+    (16) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
+    (17) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
+    (18) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT
 
-    $end            reduce using rule 3 (program -> PROG variable proc proc GORP .)
+    VAR             shift and go to state 4
+    ID              shift and go to state 27
+    PROC            shift and go to state 8
+    OPENCORCHETE    shift and go to state 10
 
+    proc                           shift and go to state 15
+    variable                       shift and go to state 26
 
 state 21
 
-    (7) proc -> PROC ID LPARENT . ID COMMA ID RPARENT statement proc
-    (8) proc -> PROC ID LPARENT . RPARENT OPENCORCHETE statement CLOSECORCHETE
-    (10) proc -> PROC ID LPARENT . RPARENT OPENCORCHETE if CLOSECORCHETE
+    (8) variable -> ID ASSIGN NUMBER . SEMMICOLOM
 
-    ID              shift and go to state 27
-    RPARENT         shift and go to state 28
+    SEMMICOLOM      shift and go to state 28
 
 
 state 22
 
-    (11) proc -> ID LPARENT NUMBER . COMMA NUMBER RPARENT SEMMICOLOM
-    (12) proc -> ID LPARENT NUMBER . COMMA NUMBER RPARENT
+    (12) arguments -> ID . COMMA
+    (13) arguments -> ID .
 
     COMMA           shift and go to state 29
+    OPENCORCHETE    reduce using rule 13 (arguments -> ID .)
+    ID              reduce using rule 13 (arguments -> ID .)
+    LPARENT         reduce using rule 13 (arguments -> ID .)
+    WHILE           reduce using rule 13 (arguments -> ID .)
+    RPARENT         reduce using rule 13 (arguments -> ID .)
 
 
 state 23
 
-    (9) proc -> OPENCORCHETE proc variable . proc CLOSECORCHETE
-    (7) proc -> . PROC ID LPARENT ID COMMA ID RPARENT statement proc
-    (8) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
-    (9) proc -> . OPENCORCHETE proc variable proc CLOSECORCHETE
-    (10) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
-    (11) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
-    (12) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT
+    (9) proc -> PROC ID arguments . statement proc
+    (11) arguments -> arguments . arguments
+    (19) statement -> . while
+    (24) statement -> . OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
+    (25) statement -> . ID LPARENT ID COMMA NUMBER RPARENT
+    (10) arguments -> . LPARENT arguments RPARENT
+    (11) arguments -> . arguments arguments
+    (12) arguments -> . ID COMMA
+    (13) arguments -> . ID
+    (21) while -> . WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD
 
-    PROC            shift and go to state 7
-    OPENCORCHETE    shift and go to state 9
-    ID              shift and go to state 8
+    OPENCORCHETE    shift and go to state 34
+    ID              shift and go to state 30
+    LPARENT         shift and go to state 35
+    WHILE           shift and go to state 36
 
-    proc                           shift and go to state 30
+    arguments                      shift and go to state 31
+    statement                      shift and go to state 32
+    while                          shift and go to state 33
 
 state 24
 
-    (5) variable -> VAR ID COMMA ID . COMMA ID SEMMICOLOM
+    (14) proc -> PROC ID LPARENT . RPARENT OPENCORCHETE statement CLOSECORCHETE
+    (16) proc -> PROC ID LPARENT . RPARENT OPENCORCHETE if CLOSECORCHETE
+    (10) arguments -> LPARENT . arguments RPARENT
+    (10) arguments -> . LPARENT arguments RPARENT
+    (11) arguments -> . arguments arguments
+    (12) arguments -> . ID COMMA
+    (13) arguments -> . ID
 
-    COMMA           shift and go to state 31
+    RPARENT         shift and go to state 37
+    LPARENT         shift and go to state 35
+    ID              shift and go to state 22
 
+    arguments                      shift and go to state 38
 
 state 25
 
-    (6) variable -> ID ASSIGN NUMBER SEMMICOLOM .
+    (17) proc -> ID LPARENT NUMBER . COMMA NUMBER RPARENT SEMMICOLOM
+    (18) proc -> ID LPARENT NUMBER . COMMA NUMBER RPARENT
 
-    PROC            reduce using rule 6 (variable -> ID ASSIGN NUMBER SEMMICOLOM .)
-    OPENCORCHETE    reduce using rule 6 (variable -> ID ASSIGN NUMBER SEMMICOLOM .)
-    ID              reduce using rule 6 (variable -> ID ASSIGN NUMBER SEMMICOLOM .)
+    COMMA           shift and go to state 39
 
 
 state 26
 
-    (4) program -> PROG variable proc proc proc GORP .
+    (15) proc -> OPENCORCHETE proc variable . proc CLOSECORCHETE
+    (7) variable -> variable . variable
+    (3) proc -> . proc proc
+    (9) proc -> . PROC ID arguments statement proc
+    (14) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
+    (15) proc -> . OPENCORCHETE proc variable proc CLOSECORCHETE
+    (16) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
+    (17) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
+    (18) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT
+    (4) variable -> . VAR variable
+    (5) variable -> . ID COMMA
+    (6) variable -> . ID SEMMICOLOM
+    (7) variable -> . variable variable
+    (8) variable -> . ID ASSIGN NUMBER SEMMICOLOM
 
-    $end            reduce using rule 4 (program -> PROG variable proc proc proc GORP .)
+    PROC            shift and go to state 8
+    OPENCORCHETE    shift and go to state 10
+    ID              shift and go to state 9
+    VAR             shift and go to state 4
 
+    proc                           shift and go to state 40
+    variable                       shift and go to state 6
 
 state 27
 
-    (7) proc -> PROC ID LPARENT ID . COMMA ID RPARENT statement proc
+    (5) variable -> ID . COMMA
+    (6) variable -> ID . SEMMICOLOM
+    (8) variable -> ID . ASSIGN NUMBER SEMMICOLOM
+    (17) proc -> ID . LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
+    (18) proc -> ID . LPARENT NUMBER COMMA NUMBER RPARENT
 
-    COMMA           shift and go to state 32
+    COMMA           shift and go to state 12
+    SEMMICOLOM      shift and go to state 13
+    ASSIGN          shift and go to state 14
+    LPARENT         shift and go to state 19
 
 
 state 28
 
-    (8) proc -> PROC ID LPARENT RPARENT . OPENCORCHETE statement CLOSECORCHETE
-    (10) proc -> PROC ID LPARENT RPARENT . OPENCORCHETE if CLOSECORCHETE
+    (8) variable -> ID ASSIGN NUMBER SEMMICOLOM .
 
-    OPENCORCHETE    shift and go to state 33
+    PROC            reduce using rule 8 (variable -> ID ASSIGN NUMBER SEMMICOLOM .)
+    OPENCORCHETE    reduce using rule 8 (variable -> ID ASSIGN NUMBER SEMMICOLOM .)
+    ID              reduce using rule 8 (variable -> ID ASSIGN NUMBER SEMMICOLOM .)
+    VAR             reduce using rule 8 (variable -> ID ASSIGN NUMBER SEMMICOLOM .)
 
 
 state 29
 
-    (11) proc -> ID LPARENT NUMBER COMMA . NUMBER RPARENT SEMMICOLOM
-    (12) proc -> ID LPARENT NUMBER COMMA . NUMBER RPARENT
+    (12) arguments -> ID COMMA .
 
-    NUMBER          shift and go to state 34
+    OPENCORCHETE    reduce using rule 12 (arguments -> ID COMMA .)
+    ID              reduce using rule 12 (arguments -> ID COMMA .)
+    LPARENT         reduce using rule 12 (arguments -> ID COMMA .)
+    WHILE           reduce using rule 12 (arguments -> ID COMMA .)
+    RPARENT         reduce using rule 12 (arguments -> ID COMMA .)
 
 
 state 30
 
-    (9) proc -> OPENCORCHETE proc variable proc . CLOSECORCHETE
+    (25) statement -> ID . LPARENT ID COMMA NUMBER RPARENT
+    (12) arguments -> ID . COMMA
+    (13) arguments -> ID .
 
-    CLOSECORCHETE   shift and go to state 35
+  ! shift/reduce conflict for LPARENT resolved as shift
+    LPARENT         shift and go to state 41
+    COMMA           shift and go to state 29
+    ID              reduce using rule 13 (arguments -> ID .)
+    OPENCORCHETE    reduce using rule 13 (arguments -> ID .)
+    WHILE           reduce using rule 13 (arguments -> ID .)
+
+  ! LPARENT         [ reduce using rule 13 (arguments -> ID .) ]
 
 
 state 31
 
-    (5) variable -> VAR ID COMMA ID COMMA . ID SEMMICOLOM
+    (11) arguments -> arguments arguments .
+    (11) arguments -> arguments . arguments
+    (10) arguments -> . LPARENT arguments RPARENT
+    (11) arguments -> . arguments arguments
+    (12) arguments -> . ID COMMA
+    (13) arguments -> . ID
 
-    ID              shift and go to state 36
+  ! shift/reduce conflict for LPARENT resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+    OPENCORCHETE    reduce using rule 11 (arguments -> arguments arguments .)
+    WHILE           reduce using rule 11 (arguments -> arguments arguments .)
+    RPARENT         reduce using rule 11 (arguments -> arguments arguments .)
+    LPARENT         shift and go to state 35
+    ID              shift and go to state 22
 
+  ! ID              [ reduce using rule 11 (arguments -> arguments arguments .) ]
+  ! LPARENT         [ reduce using rule 11 (arguments -> arguments arguments .) ]
+
+    arguments                      shift and go to state 31
 
 state 32
 
-    (7) proc -> PROC ID LPARENT ID COMMA . ID RPARENT statement proc
+    (9) proc -> PROC ID arguments statement . proc
+    (3) proc -> . proc proc
+    (9) proc -> . PROC ID arguments statement proc
+    (14) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
+    (15) proc -> . OPENCORCHETE proc variable proc CLOSECORCHETE
+    (16) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
+    (17) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
+    (18) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT
 
-    ID              shift and go to state 37
+    PROC            shift and go to state 8
+    OPENCORCHETE    shift and go to state 10
+    ID              shift and go to state 17
 
+    proc                           shift and go to state 42
 
 state 33
 
-    (8) proc -> PROC ID LPARENT RPARENT OPENCORCHETE . statement CLOSECORCHETE
-    (10) proc -> PROC ID LPARENT RPARENT OPENCORCHETE . if CLOSECORCHETE
-    (13) statement -> . while
-    (18) statement -> . OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
-    (19) statement -> . ID LPARENT ID COMMA NUMBER RPARENT
-    (14) if -> . IF condition OPENCORCHETE statement CLOSECORCHETE FI
-    (15) while -> . WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD
+    (19) statement -> while .
 
-    OPENCORCHETE    shift and go to state 39
-    ID              shift and go to state 38
-    IF              shift and go to state 43
-    WHILE           shift and go to state 44
+    PROC            reduce using rule 19 (statement -> while .)
+    OPENCORCHETE    reduce using rule 19 (statement -> while .)
+    ID              reduce using rule 19 (statement -> while .)
+    CLOSECORCHETE   reduce using rule 19 (statement -> while .)
 
-    statement                      shift and go to state 40
-    if                             shift and go to state 41
-    while                          shift and go to state 42
 
 state 34
 
-    (11) proc -> ID LPARENT NUMBER COMMA NUMBER . RPARENT SEMMICOLOM
-    (12) proc -> ID LPARENT NUMBER COMMA NUMBER . RPARENT
+    (24) statement -> OPENCORCHETE . ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
 
-    RPARENT         shift and go to state 45
+    ID              shift and go to state 43
 
 
 state 35
 
-    (9) proc -> OPENCORCHETE proc variable proc CLOSECORCHETE .
+    (10) arguments -> LPARENT . arguments RPARENT
+    (10) arguments -> . LPARENT arguments RPARENT
+    (11) arguments -> . arguments arguments
+    (12) arguments -> . ID COMMA
+    (13) arguments -> . ID
 
-    GORP            reduce using rule 9 (proc -> OPENCORCHETE proc variable proc CLOSECORCHETE .)
-    PROC            reduce using rule 9 (proc -> OPENCORCHETE proc variable proc CLOSECORCHETE .)
-    OPENCORCHETE    reduce using rule 9 (proc -> OPENCORCHETE proc variable proc CLOSECORCHETE .)
-    ID              reduce using rule 9 (proc -> OPENCORCHETE proc variable proc CLOSECORCHETE .)
-    VAR             reduce using rule 9 (proc -> OPENCORCHETE proc variable proc CLOSECORCHETE .)
-    CLOSECORCHETE   reduce using rule 9 (proc -> OPENCORCHETE proc variable proc CLOSECORCHETE .)
+    LPARENT         shift and go to state 35
+    ID              shift and go to state 22
 
+    arguments                      shift and go to state 38
 
 state 36
 
-    (5) variable -> VAR ID COMMA ID COMMA ID . SEMMICOLOM
+    (21) while -> WHILE . LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD
 
-    SEMMICOLOM      shift and go to state 46
+    LPARENT         shift and go to state 44
 
 
 state 37
 
-    (7) proc -> PROC ID LPARENT ID COMMA ID . RPARENT statement proc
+    (14) proc -> PROC ID LPARENT RPARENT . OPENCORCHETE statement CLOSECORCHETE
+    (16) proc -> PROC ID LPARENT RPARENT . OPENCORCHETE if CLOSECORCHETE
 
-    RPARENT         shift and go to state 47
+    OPENCORCHETE    shift and go to state 45
 
 
 state 38
 
-    (19) statement -> ID . LPARENT ID COMMA NUMBER RPARENT
+    (10) arguments -> LPARENT arguments . RPARENT
+    (11) arguments -> arguments . arguments
+    (10) arguments -> . LPARENT arguments RPARENT
+    (11) arguments -> . arguments arguments
+    (12) arguments -> . ID COMMA
+    (13) arguments -> . ID
 
-    LPARENT         shift and go to state 48
+    RPARENT         shift and go to state 46
+    LPARENT         shift and go to state 35
+    ID              shift and go to state 22
 
+    arguments                      shift and go to state 31
 
 state 39
 
-    (18) statement -> OPENCORCHETE . ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
+    (17) proc -> ID LPARENT NUMBER COMMA . NUMBER RPARENT SEMMICOLOM
+    (18) proc -> ID LPARENT NUMBER COMMA . NUMBER RPARENT
 
-    ID              shift and go to state 49
+    NUMBER          shift and go to state 47
 
 
 state 40
 
-    (8) proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement . CLOSECORCHETE
+    (15) proc -> OPENCORCHETE proc variable proc . CLOSECORCHETE
+    (3) proc -> proc . proc
+    (3) proc -> . proc proc
+    (9) proc -> . PROC ID arguments statement proc
+    (14) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
+    (15) proc -> . OPENCORCHETE proc variable proc CLOSECORCHETE
+    (16) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
+    (17) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
+    (18) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT
 
-    CLOSECORCHETE   shift and go to state 50
+    CLOSECORCHETE   shift and go to state 48
+    PROC            shift and go to state 8
+    OPENCORCHETE    shift and go to state 10
+    ID              shift and go to state 17
 
+    proc                           shift and go to state 15
 
 state 41
 
-    (10) proc -> PROC ID LPARENT RPARENT OPENCORCHETE if . CLOSECORCHETE
+    (25) statement -> ID LPARENT . ID COMMA NUMBER RPARENT
 
-    CLOSECORCHETE   shift and go to state 51
+    ID              shift and go to state 49
 
 
 state 42
 
-    (13) statement -> while .
+    (9) proc -> PROC ID arguments statement proc .
+    (3) proc -> proc . proc
+    (3) proc -> . proc proc
+    (9) proc -> . PROC ID arguments statement proc
+    (14) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
+    (15) proc -> . OPENCORCHETE proc variable proc CLOSECORCHETE
+    (16) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
+    (17) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
+    (18) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT
 
-    CLOSECORCHETE   reduce using rule 13 (statement -> while .)
-    PROC            reduce using rule 13 (statement -> while .)
-    OPENCORCHETE    reduce using rule 13 (statement -> while .)
-    ID              reduce using rule 13 (statement -> while .)
+  ! shift/reduce conflict for PROC resolved as shift
+  ! shift/reduce conflict for OPENCORCHETE resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+    GORP            reduce using rule 9 (proc -> PROC ID arguments statement proc .)
+    VAR             reduce using rule 9 (proc -> PROC ID arguments statement proc .)
+    CLOSECORCHETE   reduce using rule 9 (proc -> PROC ID arguments statement proc .)
+    PROC            shift and go to state 8
+    OPENCORCHETE    shift and go to state 10
+    ID              shift and go to state 17
 
+  ! PROC            [ reduce using rule 9 (proc -> PROC ID arguments statement proc .) ]
+  ! OPENCORCHETE    [ reduce using rule 9 (proc -> PROC ID arguments statement proc .) ]
+  ! ID              [ reduce using rule 9 (proc -> PROC ID arguments statement proc .) ]
+
+    proc                           shift and go to state 15
 
 state 43
 
-    (14) if -> IF . condition OPENCORCHETE statement CLOSECORCHETE FI
-    (16) condition -> . LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT
+    (24) statement -> OPENCORCHETE ID . LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
 
-    LPARENT         shift and go to state 53
+    LPARENT         shift and go to state 50
 
-    condition                      shift and go to state 52
 
 state 44
 
-    (15) while -> WHILE . LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD
+    (21) while -> WHILE LPARENT . ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD
 
-    LPARENT         shift and go to state 54
+    ID              shift and go to state 51
 
 
 state 45
 
-    (11) proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT . SEMMICOLOM
-    (12) proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT .
+    (14) proc -> PROC ID LPARENT RPARENT OPENCORCHETE . statement CLOSECORCHETE
+    (16) proc -> PROC ID LPARENT RPARENT OPENCORCHETE . if CLOSECORCHETE
+    (19) statement -> . while
+    (24) statement -> . OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
+    (25) statement -> . ID LPARENT ID COMMA NUMBER RPARENT
+    (20) if -> . IF condition OPENCORCHETE statement CLOSECORCHETE FI
+    (21) while -> . WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD
 
-    SEMMICOLOM      shift and go to state 55
-    GORP            reduce using rule 12 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT .)
-    PROC            reduce using rule 12 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT .)
-    OPENCORCHETE    reduce using rule 12 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT .)
-    ID              reduce using rule 12 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT .)
-    VAR             reduce using rule 12 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT .)
-    CLOSECORCHETE   reduce using rule 12 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT .)
+    OPENCORCHETE    shift and go to state 34
+    ID              shift and go to state 52
+    IF              shift and go to state 55
+    WHILE           shift and go to state 36
 
+    statement                      shift and go to state 53
+    if                             shift and go to state 54
+    while                          shift and go to state 33
 
 state 46
 
-    (5) variable -> VAR ID COMMA ID COMMA ID SEMMICOLOM .
+    (10) arguments -> LPARENT arguments RPARENT .
 
-    PROC            reduce using rule 5 (variable -> VAR ID COMMA ID COMMA ID SEMMICOLOM .)
-    OPENCORCHETE    reduce using rule 5 (variable -> VAR ID COMMA ID COMMA ID SEMMICOLOM .)
-    ID              reduce using rule 5 (variable -> VAR ID COMMA ID COMMA ID SEMMICOLOM .)
+    OPENCORCHETE    reduce using rule 10 (arguments -> LPARENT arguments RPARENT .)
+    ID              reduce using rule 10 (arguments -> LPARENT arguments RPARENT .)
+    LPARENT         reduce using rule 10 (arguments -> LPARENT arguments RPARENT .)
+    WHILE           reduce using rule 10 (arguments -> LPARENT arguments RPARENT .)
+    RPARENT         reduce using rule 10 (arguments -> LPARENT arguments RPARENT .)
 
 
 state 47
 
-    (7) proc -> PROC ID LPARENT ID COMMA ID RPARENT . statement proc
-    (13) statement -> . while
-    (18) statement -> . OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
-    (19) statement -> . ID LPARENT ID COMMA NUMBER RPARENT
-    (15) while -> . WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD
+    (17) proc -> ID LPARENT NUMBER COMMA NUMBER . RPARENT SEMMICOLOM
+    (18) proc -> ID LPARENT NUMBER COMMA NUMBER . RPARENT
 
-    OPENCORCHETE    shift and go to state 39
-    ID              shift and go to state 38
-    WHILE           shift and go to state 44
+    RPARENT         shift and go to state 56
 
-    statement                      shift and go to state 56
-    while                          shift and go to state 42
 
 state 48
 
-    (19) statement -> ID LPARENT . ID COMMA NUMBER RPARENT
+    (15) proc -> OPENCORCHETE proc variable proc CLOSECORCHETE .
 
-    ID              shift and go to state 57
+    GORP            reduce using rule 15 (proc -> OPENCORCHETE proc variable proc CLOSECORCHETE .)
+    PROC            reduce using rule 15 (proc -> OPENCORCHETE proc variable proc CLOSECORCHETE .)
+    OPENCORCHETE    reduce using rule 15 (proc -> OPENCORCHETE proc variable proc CLOSECORCHETE .)
+    ID              reduce using rule 15 (proc -> OPENCORCHETE proc variable proc CLOSECORCHETE .)
+    VAR             reduce using rule 15 (proc -> OPENCORCHETE proc variable proc CLOSECORCHETE .)
+    CLOSECORCHETE   reduce using rule 15 (proc -> OPENCORCHETE proc variable proc CLOSECORCHETE .)
 
 
 state 49
 
-    (18) statement -> OPENCORCHETE ID . LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
+    (25) statement -> ID LPARENT ID . COMMA NUMBER RPARENT
 
-    LPARENT         shift and go to state 58
+    COMMA           shift and go to state 57
 
 
 state 50
 
-    (8) proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE .
+    (24) statement -> OPENCORCHETE ID LPARENT . ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
 
-    GORP            reduce using rule 8 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE .)
-    PROC            reduce using rule 8 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE .)
-    OPENCORCHETE    reduce using rule 8 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE .)
-    ID              reduce using rule 8 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE .)
-    VAR             reduce using rule 8 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE .)
-    CLOSECORCHETE   reduce using rule 8 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE .)
+    ID              shift and go to state 58
 
 
 state 51
 
-    (10) proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE .
+    (21) while -> WHILE LPARENT ID . LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD
 
-    GORP            reduce using rule 10 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE .)
-    PROC            reduce using rule 10 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE .)
-    OPENCORCHETE    reduce using rule 10 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE .)
-    ID              reduce using rule 10 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE .)
-    VAR             reduce using rule 10 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE .)
-    CLOSECORCHETE   reduce using rule 10 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE .)
+    LPARENT         shift and go to state 59
 
 
 state 52
 
-    (14) if -> IF condition . OPENCORCHETE statement CLOSECORCHETE FI
+    (25) statement -> ID . LPARENT ID COMMA NUMBER RPARENT
 
-    OPENCORCHETE    shift and go to state 59
+    LPARENT         shift and go to state 41
 
 
 state 53
 
-    (16) condition -> LPARENT . ID LPARENT ID COMMA NUMBER RPARENT RPARENT
+    (14) proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement . CLOSECORCHETE
 
-    ID              shift and go to state 60
+    CLOSECORCHETE   shift and go to state 60
 
 
 state 54
 
-    (15) while -> WHILE LPARENT . ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD
+    (16) proc -> PROC ID LPARENT RPARENT OPENCORCHETE if . CLOSECORCHETE
 
-    ID              shift and go to state 61
+    CLOSECORCHETE   shift and go to state 61
 
 
 state 55
 
-    (11) proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM .
+    (20) if -> IF . condition OPENCORCHETE statement CLOSECORCHETE FI
+    (22) condition -> . LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT
 
-    GORP            reduce using rule 11 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM .)
-    PROC            reduce using rule 11 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM .)
-    OPENCORCHETE    reduce using rule 11 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM .)
-    ID              reduce using rule 11 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM .)
-    VAR             reduce using rule 11 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM .)
-    CLOSECORCHETE   reduce using rule 11 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM .)
+    LPARENT         shift and go to state 63
 
+    condition                      shift and go to state 62
 
 state 56
 
-    (7) proc -> PROC ID LPARENT ID COMMA ID RPARENT statement . proc
-    (7) proc -> . PROC ID LPARENT ID COMMA ID RPARENT statement proc
-    (8) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE
-    (9) proc -> . OPENCORCHETE proc variable proc CLOSECORCHETE
-    (10) proc -> . PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE
-    (11) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM
-    (12) proc -> . ID LPARENT NUMBER COMMA NUMBER RPARENT
+    (17) proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT . SEMMICOLOM
+    (18) proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT .
 
-    PROC            shift and go to state 7
-    OPENCORCHETE    shift and go to state 9
-    ID              shift and go to state 8
+    SEMMICOLOM      shift and go to state 64
+    GORP            reduce using rule 18 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT .)
+    PROC            reduce using rule 18 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT .)
+    OPENCORCHETE    reduce using rule 18 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT .)
+    ID              reduce using rule 18 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT .)
+    VAR             reduce using rule 18 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT .)
+    CLOSECORCHETE   reduce using rule 18 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT .)
 
-    proc                           shift and go to state 62
 
 state 57
 
-    (19) statement -> ID LPARENT ID . COMMA NUMBER RPARENT
+    (25) statement -> ID LPARENT ID COMMA . NUMBER RPARENT
 
-    COMMA           shift and go to state 63
+    NUMBER          shift and go to state 65
 
 
 state 58
 
-    (18) statement -> OPENCORCHETE ID LPARENT . ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
+    (24) statement -> OPENCORCHETE ID LPARENT ID . RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
 
-    ID              shift and go to state 64
+    RPARENT         shift and go to state 66
 
 
 state 59
 
-    (14) if -> IF condition OPENCORCHETE . statement CLOSECORCHETE FI
-    (13) statement -> . while
-    (18) statement -> . OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
-    (19) statement -> . ID LPARENT ID COMMA NUMBER RPARENT
-    (15) while -> . WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD
+    (21) while -> WHILE LPARENT ID LPARENT . ID COMMA NUMBER RPARENT RPARENT DO do OD
 
-    OPENCORCHETE    shift and go to state 39
-    ID              shift and go to state 38
-    WHILE           shift and go to state 44
+    ID              shift and go to state 67
 
-    statement                      shift and go to state 65
-    while                          shift and go to state 42
 
 state 60
 
-    (16) condition -> LPARENT ID . LPARENT ID COMMA NUMBER RPARENT RPARENT
+    (14) proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE .
 
-    LPARENT         shift and go to state 66
+    GORP            reduce using rule 14 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE .)
+    PROC            reduce using rule 14 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE .)
+    OPENCORCHETE    reduce using rule 14 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE .)
+    ID              reduce using rule 14 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE .)
+    VAR             reduce using rule 14 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE .)
+    CLOSECORCHETE   reduce using rule 14 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE .)
 
 
 state 61
 
-    (15) while -> WHILE LPARENT ID . LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD
+    (16) proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE .
 
-    LPARENT         shift and go to state 67
+    GORP            reduce using rule 16 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE .)
+    PROC            reduce using rule 16 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE .)
+    OPENCORCHETE    reduce using rule 16 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE .)
+    ID              reduce using rule 16 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE .)
+    VAR             reduce using rule 16 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE .)
+    CLOSECORCHETE   reduce using rule 16 (proc -> PROC ID LPARENT RPARENT OPENCORCHETE if CLOSECORCHETE .)
 
 
 state 62
 
-    (7) proc -> PROC ID LPARENT ID COMMA ID RPARENT statement proc .
+    (20) if -> IF condition . OPENCORCHETE statement CLOSECORCHETE FI
 
-    GORP            reduce using rule 7 (proc -> PROC ID LPARENT ID COMMA ID RPARENT statement proc .)
-    PROC            reduce using rule 7 (proc -> PROC ID LPARENT ID COMMA ID RPARENT statement proc .)
-    OPENCORCHETE    reduce using rule 7 (proc -> PROC ID LPARENT ID COMMA ID RPARENT statement proc .)
-    ID              reduce using rule 7 (proc -> PROC ID LPARENT ID COMMA ID RPARENT statement proc .)
-    VAR             reduce using rule 7 (proc -> PROC ID LPARENT ID COMMA ID RPARENT statement proc .)
-    CLOSECORCHETE   reduce using rule 7 (proc -> PROC ID LPARENT ID COMMA ID RPARENT statement proc .)
+    OPENCORCHETE    shift and go to state 68
 
 
 state 63
 
-    (19) statement -> ID LPARENT ID COMMA . NUMBER RPARENT
+    (22) condition -> LPARENT . ID LPARENT ID COMMA NUMBER RPARENT RPARENT
 
-    NUMBER          shift and go to state 68
+    ID              shift and go to state 69
 
 
 state 64
 
-    (18) statement -> OPENCORCHETE ID LPARENT ID . RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
+    (17) proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM .
 
-    RPARENT         shift and go to state 69
+    GORP            reduce using rule 17 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM .)
+    PROC            reduce using rule 17 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM .)
+    OPENCORCHETE    reduce using rule 17 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM .)
+    ID              reduce using rule 17 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM .)
+    VAR             reduce using rule 17 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM .)
+    CLOSECORCHETE   reduce using rule 17 (proc -> ID LPARENT NUMBER COMMA NUMBER RPARENT SEMMICOLOM .)
 
 
 state 65
 
-    (14) if -> IF condition OPENCORCHETE statement . CLOSECORCHETE FI
+    (25) statement -> ID LPARENT ID COMMA NUMBER . RPARENT
 
-    CLOSECORCHETE   shift and go to state 70
+    RPARENT         shift and go to state 70
 
 
 state 66
 
-    (16) condition -> LPARENT ID LPARENT . ID COMMA NUMBER RPARENT RPARENT
+    (24) statement -> OPENCORCHETE ID LPARENT ID RPARENT . SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
 
-    ID              shift and go to state 71
+    SEMMICOLOM      shift and go to state 71
 
 
 state 67
 
-    (15) while -> WHILE LPARENT ID LPARENT . ID COMMA NUMBER RPARENT RPARENT DO do OD
+    (21) while -> WHILE LPARENT ID LPARENT ID . COMMA NUMBER RPARENT RPARENT DO do OD
 
-    ID              shift and go to state 72
+    COMMA           shift and go to state 72
 
 
 state 68
 
-    (19) statement -> ID LPARENT ID COMMA NUMBER . RPARENT
+    (20) if -> IF condition OPENCORCHETE . statement CLOSECORCHETE FI
+    (19) statement -> . while
+    (24) statement -> . OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
+    (25) statement -> . ID LPARENT ID COMMA NUMBER RPARENT
+    (21) while -> . WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD
 
-    RPARENT         shift and go to state 73
+    OPENCORCHETE    shift and go to state 34
+    ID              shift and go to state 52
+    WHILE           shift and go to state 36
 
+    statement                      shift and go to state 73
+    while                          shift and go to state 33
 
 state 69
 
-    (18) statement -> OPENCORCHETE ID LPARENT ID RPARENT . SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
+    (22) condition -> LPARENT ID . LPARENT ID COMMA NUMBER RPARENT RPARENT
 
-    SEMMICOLOM      shift and go to state 74
+    LPARENT         shift and go to state 74
 
 
 state 70
 
-    (14) if -> IF condition OPENCORCHETE statement CLOSECORCHETE . FI
+    (25) statement -> ID LPARENT ID COMMA NUMBER RPARENT .
 
-    FI              shift and go to state 75
+    PROC            reduce using rule 25 (statement -> ID LPARENT ID COMMA NUMBER RPARENT .)
+    OPENCORCHETE    reduce using rule 25 (statement -> ID LPARENT ID COMMA NUMBER RPARENT .)
+    ID              reduce using rule 25 (statement -> ID LPARENT ID COMMA NUMBER RPARENT .)
+    CLOSECORCHETE   reduce using rule 25 (statement -> ID LPARENT ID COMMA NUMBER RPARENT .)
 
 
 state 71
 
-    (16) condition -> LPARENT ID LPARENT ID . COMMA NUMBER RPARENT RPARENT
+    (24) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM . ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
 
-    COMMA           shift and go to state 76
+    ID              shift and go to state 75
 
 
 state 72
 
-    (15) while -> WHILE LPARENT ID LPARENT ID . COMMA NUMBER RPARENT RPARENT DO do OD
+    (21) while -> WHILE LPARENT ID LPARENT ID COMMA . NUMBER RPARENT RPARENT DO do OD
 
-    COMMA           shift and go to state 77
+    NUMBER          shift and go to state 76
 
 
 state 73
 
-    (19) statement -> ID LPARENT ID COMMA NUMBER RPARENT .
+    (20) if -> IF condition OPENCORCHETE statement . CLOSECORCHETE FI
 
-    CLOSECORCHETE   reduce using rule 19 (statement -> ID LPARENT ID COMMA NUMBER RPARENT .)
-    PROC            reduce using rule 19 (statement -> ID LPARENT ID COMMA NUMBER RPARENT .)
-    OPENCORCHETE    reduce using rule 19 (statement -> ID LPARENT ID COMMA NUMBER RPARENT .)
-    ID              reduce using rule 19 (statement -> ID LPARENT ID COMMA NUMBER RPARENT .)
+    CLOSECORCHETE   shift and go to state 77
 
 
 state 74
 
-    (18) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM . ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
+    (22) condition -> LPARENT ID LPARENT . ID COMMA NUMBER RPARENT RPARENT
 
     ID              shift and go to state 78
 
 
 state 75
 
-    (14) if -> IF condition OPENCORCHETE statement CLOSECORCHETE FI .
+    (24) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID . LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
 
-    CLOSECORCHETE   reduce using rule 14 (if -> IF condition OPENCORCHETE statement CLOSECORCHETE FI .)
+    LPARENT         shift and go to state 79
 
 
 state 76
 
-    (16) condition -> LPARENT ID LPARENT ID COMMA . NUMBER RPARENT RPARENT
+    (21) while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER . RPARENT RPARENT DO do OD
 
-    NUMBER          shift and go to state 79
+    RPARENT         shift and go to state 80
 
 
 state 77
 
-    (15) while -> WHILE LPARENT ID LPARENT ID COMMA . NUMBER RPARENT RPARENT DO do OD
+    (20) if -> IF condition OPENCORCHETE statement CLOSECORCHETE . FI
 
-    NUMBER          shift and go to state 80
+    FI              shift and go to state 81
 
 
 state 78
 
-    (18) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID . LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
+    (22) condition -> LPARENT ID LPARENT ID . COMMA NUMBER RPARENT RPARENT
 
-    LPARENT         shift and go to state 81
+    COMMA           shift and go to state 82
 
 
 state 79
 
-    (16) condition -> LPARENT ID LPARENT ID COMMA NUMBER . RPARENT RPARENT
+    (24) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT . ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
 
-    RPARENT         shift and go to state 82
+    ID              shift and go to state 83
 
 
 state 80
 
-    (15) while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER . RPARENT RPARENT DO do OD
+    (21) while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT . RPARENT DO do OD
 
-    RPARENT         shift and go to state 83
+    RPARENT         shift and go to state 84
 
 
 state 81
 
-    (18) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT . ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
+    (20) if -> IF condition OPENCORCHETE statement CLOSECORCHETE FI .
 
-    ID              shift and go to state 84
+    CLOSECORCHETE   reduce using rule 20 (if -> IF condition OPENCORCHETE statement CLOSECORCHETE FI .)
 
 
 state 82
 
-    (16) condition -> LPARENT ID LPARENT ID COMMA NUMBER RPARENT . RPARENT
+    (22) condition -> LPARENT ID LPARENT ID COMMA . NUMBER RPARENT RPARENT
 
-    RPARENT         shift and go to state 85
+    NUMBER          shift and go to state 85
 
 
 state 83
 
-    (15) while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT . RPARENT DO do OD
+    (24) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID . RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
 
     RPARENT         shift and go to state 86
 
 
 state 84
 
-    (18) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID . RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
+    (21) while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT . DO do OD
 
-    RPARENT         shift and go to state 87
+    DO              shift and go to state 87
 
 
 state 85
 
-    (16) condition -> LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT .
+    (22) condition -> LPARENT ID LPARENT ID COMMA NUMBER . RPARENT RPARENT
 
-    OPENCORCHETE    reduce using rule 16 (condition -> LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT .)
+    RPARENT         shift and go to state 88
 
 
 state 86
 
-    (15) while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT . DO do OD
-
-    DO              shift and go to state 88
-
-
-state 87
-
-    (18) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT . SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
+    (24) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT . SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE
 
     SEMMICOLOM      shift and go to state 89
 
 
-state 88
+state 87
 
-    (15) while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO . do OD
-    (17) do -> . OPENCORCHETE ID LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE
+    (21) while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO . do OD
+    (23) do -> . OPENCORCHETE ID LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE
 
     OPENCORCHETE    shift and go to state 91
 
     do                             shift and go to state 90
 
+state 88
+
+    (22) condition -> LPARENT ID LPARENT ID COMMA NUMBER RPARENT . RPARENT
+
+    RPARENT         shift and go to state 92
+
+
 state 89
 
-    (18) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM . ID LPARENT ID RPARENT CLOSECORCHETE
+    (24) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM . ID LPARENT ID RPARENT CLOSECORCHETE
 
-    ID              shift and go to state 92
+    ID              shift and go to state 93
 
 
 state 90
 
-    (15) while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do . OD
+    (21) while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do . OD
 
-    OD              shift and go to state 93
+    OD              shift and go to state 94
 
 
 state 91
 
-    (17) do -> OPENCORCHETE . ID LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE
+    (23) do -> OPENCORCHETE . ID LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE
 
-    ID              shift and go to state 94
+    ID              shift and go to state 95
 
 
 state 92
 
-    (18) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID . LPARENT ID RPARENT CLOSECORCHETE
+    (22) condition -> LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT .
 
-    LPARENT         shift and go to state 95
+    OPENCORCHETE    reduce using rule 22 (condition -> LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT .)
 
 
 state 93
 
-    (15) while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD .
-
-    CLOSECORCHETE   reduce using rule 15 (while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD .)
-    PROC            reduce using rule 15 (while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD .)
-    OPENCORCHETE    reduce using rule 15 (while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD .)
-    ID              reduce using rule 15 (while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD .)
-
-
-state 94
-
-    (17) do -> OPENCORCHETE ID . LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE
+    (24) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID . LPARENT ID RPARENT CLOSECORCHETE
 
     LPARENT         shift and go to state 96
 
 
+state 94
+
+    (21) while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD .
+
+    PROC            reduce using rule 21 (while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD .)
+    OPENCORCHETE    reduce using rule 21 (while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD .)
+    ID              reduce using rule 21 (while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD .)
+    CLOSECORCHETE   reduce using rule 21 (while -> WHILE LPARENT ID LPARENT ID COMMA NUMBER RPARENT RPARENT DO do OD .)
+
+
 state 95
 
-    (18) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT . ID RPARENT CLOSECORCHETE
+    (23) do -> OPENCORCHETE ID . LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE
 
-    ID              shift and go to state 97
+    LPARENT         shift and go to state 97
 
 
 state 96
 
-    (17) do -> OPENCORCHETE ID LPARENT . ID COMMA NUMBER RPARENT CLOSECORCHETE
+    (24) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT . ID RPARENT CLOSECORCHETE
 
     ID              shift and go to state 98
 
 
 state 97
 
-    (18) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID . RPARENT CLOSECORCHETE
+    (23) do -> OPENCORCHETE ID LPARENT . ID COMMA NUMBER RPARENT CLOSECORCHETE
 
-    RPARENT         shift and go to state 99
+    ID              shift and go to state 99
 
 
 state 98
 
-    (17) do -> OPENCORCHETE ID LPARENT ID . COMMA NUMBER RPARENT CLOSECORCHETE
+    (24) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID . RPARENT CLOSECORCHETE
 
-    COMMA           shift and go to state 100
+    RPARENT         shift and go to state 100
 
 
 state 99
 
-    (18) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT . CLOSECORCHETE
+    (23) do -> OPENCORCHETE ID LPARENT ID . COMMA NUMBER RPARENT CLOSECORCHETE
 
-    CLOSECORCHETE   shift and go to state 101
+    COMMA           shift and go to state 101
 
 
 state 100
 
-    (17) do -> OPENCORCHETE ID LPARENT ID COMMA . NUMBER RPARENT CLOSECORCHETE
+    (24) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT . CLOSECORCHETE
 
-    NUMBER          shift and go to state 102
+    CLOSECORCHETE   shift and go to state 102
 
 
 state 101
 
-    (18) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE .
+    (23) do -> OPENCORCHETE ID LPARENT ID COMMA . NUMBER RPARENT CLOSECORCHETE
 
-    CLOSECORCHETE   reduce using rule 18 (statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE .)
-    PROC            reduce using rule 18 (statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE .)
-    OPENCORCHETE    reduce using rule 18 (statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE .)
-    ID              reduce using rule 18 (statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE .)
+    NUMBER          shift and go to state 103
 
 
 state 102
 
-    (17) do -> OPENCORCHETE ID LPARENT ID COMMA NUMBER . RPARENT CLOSECORCHETE
+    (24) statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE .
 
-    RPARENT         shift and go to state 103
+    PROC            reduce using rule 24 (statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE .)
+    OPENCORCHETE    reduce using rule 24 (statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE .)
+    ID              reduce using rule 24 (statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE .)
+    CLOSECORCHETE   reduce using rule 24 (statement -> OPENCORCHETE ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT SEMMICOLOM ID LPARENT ID RPARENT CLOSECORCHETE .)
 
 
 state 103
 
-    (17) do -> OPENCORCHETE ID LPARENT ID COMMA NUMBER RPARENT . CLOSECORCHETE
+    (23) do -> OPENCORCHETE ID LPARENT ID COMMA NUMBER . RPARENT CLOSECORCHETE
 
-    CLOSECORCHETE   shift and go to state 104
+    RPARENT         shift and go to state 104
 
 
 state 104
 
-    (17) do -> OPENCORCHETE ID LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE .
+    (23) do -> OPENCORCHETE ID LPARENT ID COMMA NUMBER RPARENT . CLOSECORCHETE
 
-    OD              reduce using rule 17 (do -> OPENCORCHETE ID LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE .)
+    CLOSECORCHETE   shift and go to state 105
 
+
+state 105
+
+    (23) do -> OPENCORCHETE ID LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE .
+
+    OD              reduce using rule 23 (do -> OPENCORCHETE ID LPARENT ID COMMA NUMBER RPARENT CLOSECORCHETE .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for VAR in state 6 resolved as shift
+WARNING: shift/reduce conflict for ID in state 6 resolved as shift
+WARNING: shift/reduce conflict for VAR in state 11 resolved as shift
+WARNING: shift/reduce conflict for ID in state 11 resolved as shift
+WARNING: shift/reduce conflict for PROC in state 15 resolved as shift
+WARNING: shift/reduce conflict for OPENCORCHETE in state 15 resolved as shift
+WARNING: shift/reduce conflict for ID in state 15 resolved as shift
+WARNING: shift/reduce conflict for LPARENT in state 30 resolved as shift
+WARNING: shift/reduce conflict for LPARENT in state 31 resolved as shift
+WARNING: shift/reduce conflict for ID in state 31 resolved as shift
+WARNING: shift/reduce conflict for PROC in state 42 resolved as shift
+WARNING: shift/reduce conflict for OPENCORCHETE in state 42 resolved as shift
+WARNING: shift/reduce conflict for ID in state 42 resolved as shift

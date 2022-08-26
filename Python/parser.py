@@ -84,31 +84,52 @@ def t_error(t):
 # Producciones
 def p_progs(p):
 	'''program : PROG'''
-	print ("EL PROGRAMA INICIA CON PROG")
+	print ("EL PROGRAMA INICIA CON PROG \n CODIGO FUNCIONAL")
 
 def p_progf(p):
 	'''program : PROG variable proc GORP'''
-	print ("EL PROGRAMA TERMINA CON GORP")
+	print ("EL PROGRAMA TERMINA CON GORP \n CODIGO FUNCIONAL")
 
-def p_progf2(p):
-	'''program : PROG variable proc proc GORP'''
-	print ("EL PROGRAMA TIENE UNA VARIABLE Y 2 FUNCIONES, TERMINA CON GORP \n EL PROGRAMA FUNCIONA CORRECTAMENTE")
 # ASIGNACIÓN DE VARIABLES
 
-def p_progf3(p):
-	'''program : PROG variable proc proc proc GORP'''
-	print ("EL PROGRAMA TIENE UNA VARIABLE Y 3 FUNCIONES, TERMINA CON GORP \n EL PROGRAMA FUNCIONA CORRECTAMENTE")
-# ASIGNACIÓN DE VARIABLES
+def p_proc4(p):
+    '''proc : proc proc'''
+
 def p_variable(p):
-    '''variable : VAR ID COMMA ID COMMA ID SEMMICOLOM'''   
+    '''variable : VAR variable'''   
     print("Inicializacion de Variables")
+
+def p_variable2(p):
+    ''' variable : ID COMMA'''
+
+
+def p_variable3(p):
+    ''' variable : ID SEMMICOLOM'''
+
+
+def p_variable4(p):
+    ''' variable : variable variable'''
+
 
 def p_variable1(p):
     '''variable : ID ASSIGN NUMBER SEMMICOLOM'''
     print("Se asigna una variable")
+    
 def p_PROC(p):
-    '''proc : PROC ID LPARENT ID COMMA ID RPARENT statement proc'''
+    '''proc : PROC ID arguments statement proc'''
     print("Inicializacion de funcion")
+
+def p_arguments(p):
+    '''arguments : LPARENT arguments RPARENT'''
+
+def p_arguments2(p):
+    '''arguments : arguments arguments'''
+
+def p_arguments3(p):
+    '''arguments : ID COMMA '''
+
+def p_arguments4(p):
+    '''arguments : ID'''
 
 def p_PROC1(p):
     '''proc : PROC ID LPARENT RPARENT OPENCORCHETE statement CLOSECORCHETE'''
@@ -163,7 +184,7 @@ def p_error(p):
 
 # LEER ARCHIVO .TXT
 
-archivo = "file.txt"
+archivo = r"C:\Users\Usuario\Desktop\proyecto0lym\Proyect0\Python\file.txt"
 fp = codecs.open(archivo, "r", "utf-8")
 cadena = fp.read()
 fp.close()
